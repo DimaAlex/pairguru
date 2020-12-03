@@ -14,4 +14,8 @@
 
 class Movie < ApplicationRecord
   belongs_to :genre
+
+  def external_data
+    @external_data ||= Movies::ExternalData.new(title).fetch
+  end
 end
