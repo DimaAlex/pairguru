@@ -13,7 +13,10 @@ module Movies
     end
 
     def fetch
-      return false if request.code != SUCCESS_HTTP_CODE
+      unless request.code == SUCCESS_HTTP_CODE
+        Rails.logger.error("[PAIRGURU API] Fetching data for movie #{title} is failed with message #{parsed_error_body}")
+        return {}
+      end
 
       ExternalMovieDecorator.new(parsed_body).decorate
     end
@@ -31,6 +34,10 @@ module Movies
 
     def parsed_body
       JSON.parse(request.body)['data']['attributes']
+    end
+
+    def parsed_error_body
+      JSON.parse(request.body)['message']
     end
 
     def uri
