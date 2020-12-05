@@ -6,11 +6,7 @@ class MovieDecorator < Draper::Decorator
   delegate_all
 
   def cover
-    "http://lorempixel.com/100/150/#{COVER_EXAMPLES.sample}?a=#{SecureRandom.uuid}"
-  end
-
-  def poster
-    external_data.poster
+    external_data.poster || "http://lorempixel.com/100/150/#{COVER_EXAMPLES.sample}?a=#{SecureRandom.uuid}"
   end
 
   def rating

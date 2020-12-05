@@ -1,10 +1,10 @@
 %table.table.table-striped
   %tbody
     - movies.each_with_index do |movie, i|
-      %tr{ data: movie.id }
+      %tr
         %td= i + 1
         %td.movie_image
-          %img.img-rounded{ src: movie&.poster || movie.cover }
+          %img.img-rounded{ src: movie.cover }
         %td
           %h4
             = link_to movie.title, movie_path(movie)
