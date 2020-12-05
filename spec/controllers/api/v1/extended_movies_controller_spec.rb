@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe Api::V1::ExtendedMoviesController, type: :controller do
   let!(:movie) { create(:movie) }
   let!(:genre) { movie.genre }
-  let(:apikey) { 'api_key_test' }
   let(:json_response) { JSON.parse(response.body, symbolize_names: true) }
   let(:expected_response_body) do
     [{
@@ -19,11 +18,11 @@ RSpec.describe Api::V1::ExtendedMoviesController, type: :controller do
     }]
   end
 
-  it_behaves_like 'authenticable', :index
-
   describe 'GET /api/v1/extended_movies' do
+    it_behaves_like 'authenticable', :index
+
     context 'when request is successful' do
-      before { request.headers['apikey'] = apikey }
+      include_context 'with apikey'
 
       it 'returns correct response' do
         get :index, format: :json
@@ -33,7 +32,7 @@ RSpec.describe Api::V1::ExtendedMoviesController, type: :controller do
   end
 
   describe 'GET /api/v1/extended_movies/:id' do
-    before { request.headers['apikey'] = apikey }
+    include_context 'with apikey'
 
     it 'returns correct response' do
       get :show, params: { id: movie.id, format: :json }
