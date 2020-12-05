@@ -9,7 +9,7 @@ class ExternalMovieDecorator
 
   def decorate
     movie.slice(*REQUIRED_ATTRIBUTES).tap do |m|
-      m['poster'] = "#{Movies::ExternalData::HOST}#{m['poster']}"
+      m['poster'] = "#{Movies::ExternalData::HOST}#{m['poster']}" if m['poster'].present?
     end
   end
 
