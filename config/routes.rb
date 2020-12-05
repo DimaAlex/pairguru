@@ -15,4 +15,11 @@ Rails.application.routes.draw do
       get :export
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      resources :movies, only: %i[index show]
+      resources :extended_movies, only: %i[index show]
+    end
+  end
 end
