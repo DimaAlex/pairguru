@@ -1,8 +1,10 @@
 %h1= @movie.title
 .jumbotron
   = @movie.description
-  = @movie.plot
-  = @movie.rating
+  %div
+    = @movie.plot
+  %div
+    = @movie.rating
   .movie_image
     %img.img-rounded{ src: @movie.cover }
 

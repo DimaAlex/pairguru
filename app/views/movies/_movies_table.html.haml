@@ -13,5 +13,6 @@
               = link_to movie.genre.name, movies_genre_path(movie.genre)
             = " (#{movie.released_at})"
           %p= movie.description
-          %p= movie.plot
-          %p= movie.rating
+          - if with_external
+            %p= movie.plot
+            %p= movie.rating

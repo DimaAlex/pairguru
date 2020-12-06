@@ -31,12 +31,15 @@ module Movies
 
     def attributes
       parsed_body.dig('data', 'attributes')
+        .slice(*ExternalMovieDecorator::REQUIRED_ATTRIBUTES).tap do |attr|
+          attr['poster'] = "#{HOST}#{attr['poster']}" if attr['poster'].present?
+        end
     end
 
     def handle_response
       case request
       when Net::HTTPSuccess, Net::HTTPRedirection then
-        ExternalMovieDecorator.new(attributes).decorate
+        attributes
       else
         Rails.logger.warn(error_message)
         {}
