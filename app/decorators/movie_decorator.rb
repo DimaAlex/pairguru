@@ -6,14 +6,10 @@ class MovieDecorator < Draper::Decorator
   delegate_all
 
   def cover
-    external_data['poster'] || "http://lorempixel.com/100/150/#{COVER_EXAMPLES.sample}?a=#{SecureRandom.uuid}"
+    poster || "http://lorempixel.com/100/150/#{COVER_EXAMPLES.sample}?a=#{SecureRandom.uuid}"
   end
 
-  def rating
-    external_data['rating']
-  end
-
-  def plot
-    external_data['plot']
+  ExternalMovieDecorator::REQUIRED_ATTRIBUTES.each do |attr|
+    define_method(attr) { external_data[attr] }
   end
 end
