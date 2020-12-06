@@ -3,7 +3,7 @@
     - movies.each_with_index do |movie, i|
       %tr
         %td= i + 1
-        %td
+        %td.movie_image
           %img.img-rounded{ src: movie.cover }
         %td
           %h4
@@ -11,5 +11,8 @@
           %p
             %strong
               = link_to movie.genre.name, movies_genre_path(movie.genre)
-            = ' (' + movie.released_at.to_s + ')'
+            = " (#{movie.released_at})"
           %p= movie.description
+          - if with_external
+            %p= movie.plot
+            %p= movie.rating
